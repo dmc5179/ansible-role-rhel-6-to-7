@@ -1,0 +1,36 @@
+---
+# tasks file for ansible-role-rhel-6-to-7
+
+# TODO: Check if yum-plugin-versionlock is installed then clear if it is
+#- name: Remove Yum Version Lock
+#  become: true
+#  shell: yum versionlock clear
+
+- name: Enable required repos
+  become: true
+  community.general.rhsm_repository:
+    name: '{{ item }}'
+    state: enabled
+  with_items:
+    - 'rhel-6-server-extras-rpms'
+    - 'rhel-6-server-optional-rpms'
+
+- name: Install the Preupgrade Assistant and Red Hat Upgrade Tool
+  become: true
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - 'preupgrade-assistant'
+    - 'preupgrade-assistant-el6toel7'
+    - 'redhat-upgrade-tool'
+
+# Add task to disable NetworkManager if present
+
+#- name: Upgrade all packages
+#  yum:
+#    name: '*'
+#    state: latest
+
+- name: Reboot the server and wait for it to come back up.
+  reboot:

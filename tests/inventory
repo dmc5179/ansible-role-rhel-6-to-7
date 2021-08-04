@@ -1,0 +1,12 @@
+[all]
+192.168.122.28
+
+[all:vars]
+#ansible_python_interpreter=/usr/bin/python3
+#ansible_ssh_private_key_file=
+ansible_connection=ssh
+ansible_user=root
+ansible_ssh_pass=redhat2021
+#ansible_become=yes
+ansible_become_method=sudo
+ansible_become_user=root

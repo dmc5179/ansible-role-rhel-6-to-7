@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - ../ansible-role-rhel-6-to-7
